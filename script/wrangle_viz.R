@@ -54,7 +54,7 @@ p1 <- ggplot(p1sector, aes(x = fct_infreq(response))) + # sort the response most
   themeKV + 
   theme(axis.ticks.x = element_blank(),
         axis.text.y = element_text(size = 8),
-        axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
+        axis.text.x = element_text(size = 6)) + # names can be too long, let's shrink em
   geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
@@ -81,7 +81,7 @@ p3 <- ggplot(p3work_system, aes(x = fct_infreq(response))) + # sort the response
   themeKV + 
   theme(axis.ticks.x = element_blank(),
         axis.text.y = element_text(size = 8),
-        axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
+        axis.text.x = element_text(size = 7)) + # names can be too long, let's shrink em
   geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
@@ -187,12 +187,13 @@ p10 <- ggplot(p10professional_language, aes(x = fct_rev(fct_infreq(response)))) 
   coord_flip() # make bars horizontal
 
 
-
-
 # invoke patchwork to call and layout the above panels
-# (p1 + p2 + p5) / (p3 + p4 + plot_spacer()) / (p6 + p7 + p8) / (p9 + p10 + plot_spacer()) +
-#  plot_annotation(tag_levels = 'a') # add panel labels a, b, c... etc
-  
+# force layout given the vertical dimension needed for language plots
+# below layout considers the following row themes:
+# r1 = academic
+# r2 = geography
+# r3 = demographic
+# r4 = language
 
 layout <- "
 AABBCC
