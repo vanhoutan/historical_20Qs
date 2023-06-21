@@ -3,7 +3,7 @@
     "path": "~/historical_20Qs/script/wrangle_viz.R",
     "project_path": "script/wrangle_viz.R",
     "type": "r_source",
-    "hash": "4286086564",
+    "hash": "3822930356",
     "contents": "",
     "dirty": false,
     "created": 1687287673799.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "51,0",
-        "scrollLine": "41"
+        "cursorPosition": "63,0",
+        "scrollLine": "51"
     },
     "folds": "",
-    "lastKnownWriteTime": 1687313208,
+    "lastKnownWriteTime": 1687314720,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1687313208999,
+    "last_content_update": 1687314720167,
     "read_only": false,
     "read_only_alternatives": []
 }

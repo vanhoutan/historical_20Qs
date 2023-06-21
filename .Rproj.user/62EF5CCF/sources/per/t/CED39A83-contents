@@ -42,22 +42,40 @@ demogrGR <- demogrG[!(demogrG$response == ""), ]  # remove blank entries
 demogrGR$question <- sub("\\..*", "", demogrGR$survey) # truncates field entry after "."
 demogrGRS = subset(demogrGR, select = -c(survey)) # remove the col with bad names "survey"
 
-
 #### begin data viz for plots here
+
+## subset original long DF for survey question 
+# for each panel, x = question, y = response
+sector <- subset(demogrGRS, question == "sector")
 p1 <- sector
+
+# a basic bar plot
+p1 <- ggplot(sector, aes(x = fct_infreq(response))) + # sort the response most to least 
+  # if flip coord then use x = fct_rev(fct_infreq(response))
+  themeKV + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("institutional sector")
+  #coord_flip() # make bars horizontal
+
+
 p2 <- discipline
 
-p3 <- work system
-p4 <- work region
+p3 <- work_system
+p4 <- work_region
 
-p5 <- approach
-p6 <- career stage
+p5 <- scholarly_approach
+p6 <- career_stage
 
 p7 <- gender
 p8 <- ethnicity
 
-p9 <- language first
-p10 <- language professional
+
+p9 <- first_language
+p10 <- professional_language
 
 
 
