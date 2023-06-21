@@ -16,6 +16,7 @@ library(scales)
 library(RColorBrewer) # pretty colors
 library(ggridges)
 library(colorspace)
+library(patchwork)
 
 
 # custom ggplot theme
@@ -46,15 +47,14 @@ demogrGRS = subset(demogrGR, select = -c(survey)) # remove the col with bad name
 
 ## subset original long DF for survey question 
 # for each panel, x = question, y = response
-sector <- subset(demogrGRS, question == "sector")
-p1 <- sector
-
+p1sector <- subset(demogrGRS, question == "sector")
 # a basic bar plot
-p1 <- ggplot(sector, aes(x = fct_infreq(response))) + # sort the response most to least 
+p1 <- ggplot(p1sector, aes(x = fct_infreq(response))) + # sort the response most to least 
   # if flip coord then use x = fct_rev(fct_infreq(response))
   themeKV + 
   theme(axis.ticks.x = element_blank(),
-        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
+        axis.text.y = element_text(size = 8),
+        axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
   geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
@@ -62,45 +62,148 @@ p1 <- ggplot(sector, aes(x = fct_infreq(response))) + # sort the response most t
   #coord_flip() # make bars horizontal
 
 
-p2 <- discipline
-
-p3 <- work_system
-p4 <- work_region
-
-p5 <- scholarly_approach
-p6 <- career_stage
-
-p7 <- gender
-p8 <- ethnicity
-
-
-p9 <- first_language
-p10 <- professional_language
+# bar plot, but flip due to category name lengths
+p2discipline <- subset(demogrGRS, question == "discipline") ## subset original long DF for survey question 
+p2 <- ggplot(p2discipline, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("discipline") + 
+  coord_flip() # make bars horizontal
 
 
+# subset, then make bar akin to p1
+p3work_system <- subset(demogrGRS, question == "work_system")
+p3 <- ggplot(p3work_system, aes(x = fct_infreq(response))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.y = element_text(size = 8),
+        axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("ecological setting")
+
+
+# subset for p4 data
+p4work_region <- subset(demogrGRS, question == "work_region") ## subset original long DF for survey question 
+# flipped bar plot akin to p2
+p4 <- ggplot(p4work_region, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("geogr. region") + 
+  coord_flip() # make bars horizontal
+
+
+#subset for p5 data
+p5scholarly_approach <- subset(demogrGRS, question == "scholarly_approach")
+# a basic bar plot akin to p1
+p5 <- ggplot(p5scholarly_approach, aes(x = fct_infreq(response))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.y = element_text(size = 8),
+        axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("analytical approach")
+
+
+# subset for p6 career stage data
+p6career_stage <- subset(demogrGRS, question == "career_stage")
+# bar plot akin to p1
+p6 <- ggplot(p6career_stage, aes(x = fct_infreq(response))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.y = element_text(size = 8),
+        axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("career stage")
+
+
+# subset for p7 gender data
+p7gender <- subset(demogrGRS, question == "gender")
+# bar plot akin to p1
+p7 <- ggplot(p7gender, aes(x = fct_infreq(response))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.y = element_text(size = 8),
+        axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("gender")
+
+
+# subset for p8 ethnicity data
+p8ethnicity <- subset(demogrGRS, question == "ethnicity")
+# flipped bar plot akin to p2
+p8 <- ggplot(p8ethnicity, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("ethnicity") + 
+  coord_flip() # make bars horizontal
+
+
+# subset for p9 first language learned data
+p9first_language <- subset(demogrGRS, question == "first_language")
+# flipped bar plot akin to p2
+p9 <- ggplot(p9first_language, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("first language") + 
+  coord_flip() # make bars horizontal
 
 
 
-
-
-#### subset full data set for just wing data 
-# focusing here on dispersal ability, so pulling "wing_Hwi" 
-# wing_Hwi = hand wing index from Claramunt & Wright 2017, https://doi.org/10.1201/9781315120454
-morph_HWi <- subset(morphs, MORPH == "wing_Hwi")
-morph_HWi <- morph_HWi[!(morph_HWi$CODE == ""), ]  
-# remove blank entries in species CODE, for congeners that haven't been rescaled and assigned a CODE
-
+# subset for p10 professional languages used data
+p10professional_language <- subset(demogrGRS, question == "professional_language")
+# flipped bar plot akin to p2
+p10 <- ggplot(p10professional_language, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("professional lang.") + 
+  coord_flip() # make bars horizontal
 
 
 
 
 # invoke patchwork to call and layout the above panels
-(p1 + p2) /
-  (p3 + p4) /
-  (p5 + p6) / 
-  (p7 + p8) /
-  (p9 + p10) +
-  plot_annotation(tag_levels = 'a') # add panel labels a, b, c... etc
+# (p1 + p2 + p5) / (p3 + p4 + plot_spacer()) / (p6 + p7 + p8) / (p9 + p10 + plot_spacer()) +
+#  plot_annotation(tag_levels = 'a') # add panel labels a, b, c... etc
   
 
-
+layout <- "
+AABBCC
+AABBCC
+DDEE##
+DDEE##
+FFGGHH
+FFGGHH
+IIJJ##
+IIJJ##
+IIJJ##"
+p1 + p2 + p5 + p3 + p4 + p6 + p7 + p8 + p9 + p10 +
+  plot_layout(design = layout) +
+  plot_annotation(tag_levels = 'a') # add panel labels a, b, c... etc
