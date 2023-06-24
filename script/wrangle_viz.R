@@ -17,6 +17,7 @@ library(RColorBrewer) # pretty colors
 library(ggridges)
 library(colorspace)
 library(patchwork)
+library(forcats)
 
 
 # custom ggplot theme
@@ -25,8 +26,10 @@ themeKV <- theme_few()+
         axis.line = element_blank(),
         axis.text.x = element_text(colour = "black", margin = margin(0.2, unit = "cm")),
         axis.text.y = element_text(colour = "black", margin = margin(c(1, 0.2), unit = "cm")),
-        axis.ticks.x = element_line(colour = "black"), axis.ticks.y = element_line(colour = "black"),
-        axis.ticks.length=unit(-0.15, "cm"),element_line(colour = "black", linewidth=.5),
+        axis.ticks.x = element_line(colour = "black", linewidth=.25), 
+        axis.ticks.y = element_line(colour = "black", linewidth=.25),
+        axis.ticks.length=unit(-0.15, "cm"), 
+        element_line(colour = "black", linewidth=.5),
         panel.border = element_rect(colour = "black", fill=NA, linewidth=.5),
         legend.title=element_blank(),
         strip.text=element_text(hjust=0))
@@ -35,7 +38,7 @@ themeKV <- theme_few()+
 #### read in author demographic data, self-identified from a survey form
 # setwd("/Users/kylevanhoutan/historical_20Qs/")
 demogr <- read.csv('data/author_demogr.csv')
-demogrG <- gather(demogr, key="survey", value="response", 2:31) 
+demogrG <- gather(demogr, key="survey", value="response", 2:32) 
         # reshape from wide to long df
         # may need to change numbers depending on the # of cols
 demogrGR <- demogrG[!(demogrG$response == ""), ]  # remove blank entries 
@@ -50,15 +53,17 @@ demogrGRS = subset(demogrGR, select = -c(survey)) # remove the col with bad name
 p1sector <- subset(demogrGRS, question == "sector")
 # a basic bar plot
 p1 <- ggplot(p1sector, aes(x = fct_infreq(response))) + # sort the response most to least 
-  # if flip coord then use x = fct_rev(fct_infreq(response))
   themeKV + 
-  theme(axis.ticks.x = element_blank(),
+  theme(legend.position = "none",
+        axis.ticks.x = element_blank(),
         axis.text.y = element_text(size = 8),
         axis.text.x = element_text(size = 6)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
-  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+# manually scraping hex codes from 10 category palette 👇
+# https://colorbrewer2.org/#type=diverging&scheme=Spectral&n=10
+  scale_fill_brewer(palette = "Spectral") +
+  geom_bar(fill = "#9e0142", alpha = 0.85, width = 0.85) + # width controls gaps between bars
   ylab("no. coauthors") +
-  xlab("institutional sector")
+  xlab("institution type")
   #coord_flip() # make bars horizontal
 
 
@@ -67,53 +72,55 @@ p2discipline <- subset(demogrGRS, question == "discipline") ## subset original l
 p2 <- ggplot(p2discipline, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
   themeKV + 
   theme(axis.ticks.y = element_blank(),
-        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+        axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 7.5)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#d53e4f", alpha = 0.85, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
   xlab("discipline") + 
   coord_flip() # make bars horizontal
 
 
-# subset, then make bar akin to p1
-p3work_system <- subset(demogrGRS, question == "work_system")
-p3 <- ggplot(p3work_system, aes(x = fct_infreq(response))) + # sort the response most to least 
+#subset for p3 data
+p3scholarly_approach <- subset(demogrGRS, question == "scholarly_approach")
+# a basic bar plot akin to p1
+p3 <- ggplot(p3scholarly_approach, aes(x = fct_infreq(response))) + # sort the response most to least 
   themeKV + 
   theme(axis.ticks.x = element_blank(),
         axis.text.y = element_text(size = 8),
-        axis.text.x = element_text(size = 7)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+        axis.text.x = element_text(size = 7.5)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#f46d43", alpha = 0.85, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
-  xlab("ecological setting")
+  xlab("methodology")
 
 
-# subset for p4 data
-p4work_region <- subset(demogrGRS, question == "work_region") ## subset original long DF for survey question 
+# subset, then make bar akin to p1
+p4work_system <- subset(demogrGRS, question == "work_system")
+p4 <- ggplot(p4work_system, aes(x = fct_infreq(response))) + # sort the response most to least 
+  themeKV + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.y = element_text(size = 8),
+        axis.text.x = element_text(size = 6)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#fdae61", alpha = 0.85, width = 0.85) + # width controls gaps between bars
+  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+  ylab("no. coauthors") +
+  xlab("study domain")
+
+
+# subset for p5 data
+p5work_region <- subset(demogrGRS, question == "work_region") ## subset original long DF for survey question 
 # flipped bar plot akin to p2
-p4 <- ggplot(p4work_region, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
+p5 <- ggplot(p5work_region, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
   themeKV + 
   theme(axis.ticks.y = element_blank(),
-        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+        axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 7.5)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#fee08b", alpha = 0.85, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
-  xlab("geogr. region") + 
+  xlab("study region") + 
   coord_flip() # make bars horizontal
-
-
-#subset for p5 data
-p5scholarly_approach <- subset(demogrGRS, question == "scholarly_approach")
-# a basic bar plot akin to p1
-p5 <- ggplot(p5scholarly_approach, aes(x = fct_infreq(response))) + # sort the response most to least 
-  themeKV + 
-  theme(axis.ticks.x = element_blank(),
-        axis.text.y = element_text(size = 8),
-        axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
-  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
-  ylab("no. coauthors") +
-  xlab("analytical approach")
 
 
 # subset for p6 career stage data
@@ -124,7 +131,7 @@ p6 <- ggplot(p6career_stage, aes(x = fct_infreq(response))) + # sort the respons
   theme(axis.ticks.x = element_blank(),
         axis.text.y = element_text(size = 8),
         axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  geom_bar(fill = "#e6f598", alpha = 0.9, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
   xlab("career stage")
@@ -138,7 +145,7 @@ p7 <- ggplot(p7gender, aes(x = fct_infreq(response))) + # sort the response most
   theme(axis.ticks.x = element_blank(),
         axis.text.y = element_text(size = 8),
         axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+  geom_bar(fill = "#abdda4", alpha = 0.9, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
   xlab("gender")
@@ -150,8 +157,9 @@ p8ethnicity <- subset(demogrGRS, question == "ethnicity")
 p8 <- ggplot(p8ethnicity, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
   themeKV + 
   theme(axis.ticks.y = element_blank(),
-        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+        axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 7.5)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#66c2a5", alpha = 0.85, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
   xlab("ethnicity") + 
@@ -164,8 +172,9 @@ p9first_language <- subset(demogrGRS, question == "first_language")
 p9 <- ggplot(p9first_language, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
   themeKV + 
   theme(axis.ticks.y = element_blank(),
-        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
+        axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 7.5)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#3288bd", alpha = 0.85, width = 0.85) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
   xlab("first language") + 
@@ -179,11 +188,11 @@ p10professional_language <- subset(demogrGRS, question == "professional_language
 p10 <- ggplot(p10professional_language, aes(x = fct_rev(fct_infreq(response)))) + # sort the response most to least 
   themeKV + 
   theme(axis.ticks.y = element_blank(),
-        axis.text.y = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#990033", alpha = 0.8, width = 0.85) + # width controls gaps between bars
-  # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
+        axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 7.5)) + # names can be too long, let's shrink em
+  geom_bar(fill = "#5e4fa2", alpha = 0.85, width = 0.85) + # width controls gaps between bars
   ylab("no. coauthors") +
-  xlab("professional lang.") + 
+  xlab("work languages") + 
   coord_flip() # make bars horizontal
 
 
@@ -205,6 +214,6 @@ FFGGHH
 IIJJ##
 IIJJ##
 IIJJ##"
-p1 + p2 + p5 + p3 + p4 + p6 + p7 + p8 + p9 + p10 +
+p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10 +
   plot_layout(design = layout) +
   plot_annotation(tag_levels = 'a') # add panel labels a, b, c... etc
