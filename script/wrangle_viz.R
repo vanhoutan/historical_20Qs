@@ -38,7 +38,7 @@ themeKV <- theme_few()+
 #### read in author demographic data, self-identified from a survey form
 # setwd("/Users/kylevanhoutan/historical_20Qs/")
 demogr <- read.csv('data/author_demogr.csv')
-demogrG <- gather(demogr, key="survey", value="response", 2:32) 
+demogrG <- gather(demogr, key="survey", value="response", 2:31) # the number of cols may change
         # reshape from wide to long df
         # may need to change numbers depending on the # of cols
 demogrGR <- demogrG[!(demogrG$response == ""), ]  # remove blank entries 
