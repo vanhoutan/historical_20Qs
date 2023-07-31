@@ -1,55 +1,109 @@
-﻿YEAR,CITATIONS
-1970,18
-1971,9
-1972,12
-1973,17
-1974,17
-1975,18
-1976,28
-1977,19
-1978,18
-1979,31
-1980,42
-1981,45
-1982,50
-1983,36
-1984,55
-1985,52
-1986,64
-1987,73
-1988,80
-1989,82
-1990,100
-1991,112
-1992,200
-1993,169
-1994,189
-1995,196
-1996,251
-1997,313
-1998,329
-1999,313
-2000,480
-2001,488
-2002,564
-2003,556
-2004,607
-2005,605
-2006,656
-2007,810
-2008,844
-2009,895
-2010,918
-2011,970
-2012,1140
-2013,1100
-2014,1260
-2015,1390
-2016,1460
-2017,1390
-2018,1450
-2019,1410
-2020,1520
-2021,1460
-2022,1391
-2023,1376
+﻿YEAR,SEARCH,CITATIONS
+1970,"""historical ecology""",18
+1971,"""historical ecology""",9
+1972,"""historical ecology""",12
+1973,"""historical ecology""",17
+1974,"""historical ecology""",17
+1975,"""historical ecology""",18
+1976,"""historical ecology""",28
+1977,"""historical ecology""",19
+1978,"""historical ecology""",18
+1979,"""historical ecology""",39
+1980,"""historical ecology""",42
+1981,"""historical ecology""",45
+1982,"""historical ecology""",50
+1983,"""historical ecology""",36
+1984,"""historical ecology""",55
+1985,"""historical ecology""",52
+1986,"""historical ecology""",64
+1987,"""historical ecology""",73
+1988,"""historical ecology""",80
+1989,"""historical ecology""",82
+1990,"""historical ecology""",99
+1991,"""historical ecology""",111
+1992,"""historical ecology""",196
+1993,"""historical ecology""",169
+1994,"""historical ecology""",189
+1995,"""historical ecology""",196
+1996,"""historical ecology""",251
+1997,"""historical ecology""",313
+1998,"""historical ecology""",329
+1999,"""historical ecology""",312
+2000,"""historical ecology""",409
+2001,"""historical ecology""",488
+2002,"""historical ecology""",564
+2003,"""historical ecology""",556
+2004,"""historical ecology""",607
+2005,"""historical ecology""",599
+2006,"""historical ecology""",648
+2007,"""historical ecology""",769
+2008,"""historical ecology""",837
+2009,"""historical ecology""",878
+2010,"""historical ecology""",905
+2011,"""historical ecology""",954
+2012,"""historical ecology""",1130
+2013,"""historical ecology""",1090
+2014,"""historical ecology""",1250
+2015,"""historical ecology""",1370
+2016,"""historical ecology""",1470
+2017,"""historical ecology""",1360
+2018,"""historical ecology""",1430
+2019,"""historical ecology""",1390
+2020,"""historical ecology""",1490
+2021,"""historical ecology""",1430
+2022,"""historical ecology""",1370
+2023,"""historical ecology""",1367
+1970,"""historical ecology"" OR ""historical ecological"" ",29
+1971,"""historical ecology"" OR ""historical ecological"" ",18
+1972,"""historical ecology"" OR ""historical ecological"" ",30
+1973,"""historical ecology"" OR ""historical ecological"" ",33
+1974,"""historical ecology"" OR ""historical ecological"" ",28
+1975,"""historical ecology"" OR ""historical ecological"" ",34
+1976,"""historical ecology"" OR ""historical ecological"" ",48
+1977,"""historical ecology"" OR ""historical ecological"" ",36
+1978,"""historical ecology"" OR ""historical ecological"" ",37
+1979,"""historical ecology"" OR ""historical ecological"" ",64
+1980,"""historical ecology"" OR ""historical ecological"" ",62
+1981,"""historical ecology"" OR ""historical ecological"" ",65
+1982,"""historical ecology"" OR ""historical ecological"" ",74
+1983,"""historical ecology"" OR ""historical ecological"" ",61
+1984,"""historical ecology"" OR ""historical ecological"" ",92
+1985,"""historical ecology"" OR ""historical ecological"" ",86
+1986,"""historical ecology"" OR ""historical ecological"" ",96
+1987,"""historical ecology"" OR ""historical ecological"" ",105
+1988,"""historical ecology"" OR ""historical ecological"" ",123
+1989,"""historical ecology"" OR ""historical ecological"" ",111
+1990,"""historical ecology"" OR ""historical ecological"" ",136
+1991,"""historical ecology"" OR ""historical ecological"" ",171
+1992,"""historical ecology"" OR ""historical ecological"" ",248
+1993,"""historical ecology"" OR ""historical ecological"" ",214
+1994,"""historical ecology"" OR ""historical ecological"" ",248
+1995,"""historical ecology"" OR ""historical ecological"" ",260
+1996,"""historical ecology"" OR ""historical ecological"" ",331
+1997,"""historical ecology"" OR ""historical ecological"" ",410
+1998,"""historical ecology"" OR ""historical ecological"" ",418
+1999,"""historical ecology"" OR ""historical ecological"" ",414
+2000,"""historical ecology"" OR ""historical ecological"" ",503
+2001,"""historical ecology"" OR ""historical ecological"" ",606
+2002,"""historical ecology"" OR ""historical ecological"" ",707
+2003,"""historical ecology"" OR ""historical ecological"" ",697
+2004,"""historical ecology"" OR ""historical ecological"" ",751
+2005,"""historical ecology"" OR ""historical ecological"" ",759
+2006,"""historical ecology"" OR ""historical ecological"" ",843
+2007,"""historical ecology"" OR ""historical ecological"" ",926
+2008,"""historical ecology"" OR ""historical ecological"" ",1050
+2009,"""historical ecology"" OR ""historical ecological"" ",1080
+2010,"""historical ecology"" OR ""historical ecological"" ",1170
+2011,"""historical ecology"" OR ""historical ecological"" ",1170
+2012,"""historical ecology"" OR ""historical ecological"" ",1400
+2013,"""historical ecology"" OR ""historical ecological"" ",1370
+2014,"""historical ecology"" OR ""historical ecological"" ",1520
+2015,"""historical ecology"" OR ""historical ecological"" ",1660
+2016,"""historical ecology"" OR ""historical ecological"" ",1800
+2017,"""historical ecology"" OR ""historical ecological"" ",1690
+2018,"""historical ecology"" OR ""historical ecological"" ",1800
+2019,"""historical ecology"" OR ""historical ecological"" ",1770
+2020,"""historical ecology"" OR ""historical ecological"" ",1880
+2021,"""historical ecology"" OR ""historical ecological"" ",1910
+2022,"""historical ecology"" OR ""historical ecological"" ",1810
+2023,"""historical ecology"" OR ""historical ecological"" ",1782
