@@ -36,14 +36,14 @@ cites <- read.csv('data/citations.csv')
 
 ggplot(cites, aes(x = YEAR, y = CITATIONS, group = SEARCH, color = SEARCH)) +
   themeKV + 
-  theme(axis.title.x=element_blank(),
+  theme(#axis.title.x=element_blank(),
         axis.text.y = element_text(size = 9),
         axis.text.x = element_text(size = 9)) + 
   geom_line(aes(color=SEARCH), stat="smooth", method = "loess", formula = y ~ x, span = 0.15, 
-            se = FALSE, linewidth = 1.8, alpha = 0.4)  +
+            se = FALSE, linewidth = 1.8, alpha = 0.5)  +
   scale_color_manual(values=c("#abdda4", "#3288bd")) + 
   geom_point(size = 3.3, shape = 16, alpha = 0.8) +
   scale_fill_manual(values=c("#abdda4", "#3288bd")) + 
   scale_y_continuous(breaks = seq(0, 2000, by = 200)) +
-  ylab("no. citations") +
+  ylab("no. publications") +
   xlab("publication year")
