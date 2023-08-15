@@ -194,7 +194,6 @@ p10 <- ggplot(p10professional_language, aes(x = fct_rev(fct_infreq(response)))) 
   xlab("work languages") + 
   coord_flip() # make bars horizontal
 
-
 # invoke patchwork to call and layout the above panels
 # force layout given the vertical dimension needed for language plots
 # below layout considers the following row themes:
@@ -202,6 +201,7 @@ p10 <- ggplot(p10professional_language, aes(x = fct_rev(fct_infreq(response)))) 
 # r2 = geography
 # r3 = demographic
 # r4 = language
+
 
 layout <- "
 AABBCC
