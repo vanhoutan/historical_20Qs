@@ -61,6 +61,8 @@ p1 <- ggplot(p1sector, aes(x = fct_infreq(response))) + # sort the response most
 # https://colorbrewer2.org/#type=diverging&scheme=Spectral&n=10
   scale_fill_brewer(palette = "Spectral") +
   geom_bar(fill = "#9e0142", alpha = 0.85, width = 0.85) + # width controls gaps between bars
+  scale_y_continuous(breaks = seq(0, 40, by = 8), 
+                     ) +
   ylab("no. coauthors") +
   xlab("institution type")
   #coord_flip() # make bars horizontal
@@ -77,6 +79,9 @@ p2 <- ggplot(p2discipline, aes(x = fct_rev(fct_infreq(response)))) + # sort the 
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
   xlab("discipline") + 
+  scale_y_continuous(breaks = seq(0, 30, by = 5), 
+                     #limits = c(0,28),
+  ) +
   coord_flip() # make bars horizontal
 
 
@@ -88,9 +93,12 @@ p3 <- ggplot(p3scholarly_approach, aes(x = fct_infreq(response))) + # sort the r
   theme(axis.ticks.x = element_blank(),
         axis.text.y = element_text(size = 8),
         axis.text.x = element_text(size = 7.5)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#f46d43", alpha = 0.85, width = 0.85) + # width controls gaps between bars
+  geom_bar(fill = "#f46d43", alpha = 0.85, width = 0.9) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
+  scale_y_continuous(breaks = seq(0, 30, by = 5), 
+                     limits = c(0,28),
+                     ) +
   xlab("methodology")
 
 
@@ -144,7 +152,7 @@ p7 <- ggplot(p7gender, aes(x = fct_infreq(response))) + # sort the response most
   theme(axis.ticks.x = element_blank(),
         axis.text.y = element_text(size = 8),
         axis.text.x = element_text(size = 8)) + # names can be too long, let's shrink em
-  geom_bar(fill = "#abdda4", alpha = 0.9, width = 0.85) + # width controls gaps between bars
+  geom_bar(fill = "#abdda4", alpha = 0.9, width = 0.9) + # width controls gaps between bars
   # scale_y_continuous(breaks = seq(0, 40, by = 5)) +
   ylab("no. coauthors") +
   xlab("gender")
@@ -192,6 +200,7 @@ p10 <- ggplot(p10professional_language, aes(x = fct_rev(fct_infreq(response)))) 
   geom_bar(fill = "#5e4fa2", alpha = 0.85, width = 0.85) + # width controls gaps between bars
   ylab("no. coauthors") +
   xlab("work languages") + 
+  scale_y_continuous(breaks = seq(0, 40, by = 8)) +
   coord_flip() # make bars horizontal
 
 # invoke patchwork to call and layout the above panels
