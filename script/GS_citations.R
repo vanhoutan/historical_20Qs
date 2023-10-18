@@ -1,4 +1,4 @@
-#### this script is for plotting Google Scholar citations 
+#### this script is for plotting scholarly citations 
 #### tentatively figure 1 in the manuscript
 #### of data from the project entitled "Global research priorities for historical ecology to inform conservation"
 #### known colloquially as HE 20Qs 
@@ -7,6 +7,9 @@
 library(ggplot2)      # plotting and viz
 library(ggthemes)     # helpful ggplot themes
 library(RColorBrewer) # pretty colors
+library(plyr)         # legacy df manipulation
+library(dplyr)        # variable grouping and manipulation
+library(tidyr)        # gathering and spreading
 library(patchwork)
 
 
@@ -25,25 +28,40 @@ themeKV <- theme_few()+
         strip.text=element_text(hjust=0))
 
 
-#### read in Google Scholar citation data
-## query for the exact phrase "historical ecology" annually from 1970-present
-## tabulating the counts from queries like this:
+#### read in citation data
+## query for {"historical ecology" OR "historical ecological"} annually from 1970-present
+## tabulating the counts from 
+## Google Scholar - scholar.google.com/ 
+## CORE - core.ac.uk/
+## Scopus - www.scopus.com/
+## for queries like this:
 ## https://scholar.google.com/scholar?q=%22historical+ecology%22&hl=en&as_sdt=0%2C10&as_ylo=2022&as_yhi=2022
 
 
 # setwd("/Users/kylevanhoutan/historical_20Qs/")
-cites <- read.csv('data/citations.csv')
+df <- read.csv('data/citations2.csv')
+# calculate average of 3 search engines
+df <- df %>% rowwise() %>% 
+  mutate(average = mean(c_across(c('GoogleScholar', 'CORE', 'Scopus')), na.rm=TRUE)) 
+# gather data into tall db
+cites <- gather(df, key="SOURCE", value="CITES", 2:5)
 
-ggplot(cites, aes(x = YEAR, y = CITATIONS, group = SEARCH, color = SEARCH)) +
+## calendar years that wish to use as demarcations in the citation time series 
+vlines <- c(1990,2016) 
+
+## make plot
+ggplot(cites, aes(x = YEAR, y = CITES, group = SOURCE, color = SOURCE)) +
   themeKV + 
   theme(#axis.title.x=element_blank(),
         axis.text.y = element_text(size = 9),
         axis.text.x = element_text(size = 9)) + 
-  geom_line(aes(color=SEARCH), stat="smooth", method = "loess", formula = y ~ x, span = 0.15, 
-            se = FALSE, linewidth = 1.8, alpha = 0.5)  +
-  scale_color_manual(values=c("#abdda4", "#3288bd")) + 
-  geom_point(size = 3.3, shape = 16, alpha = 0.8) +
-  scale_fill_manual(values=c("#abdda4", "#3288bd")) + 
-  scale_y_continuous(breaks = seq(0, 2000, by = 200)) +
+  geom_vline(xintercept = vlines, alpha = 0.5, size = 0.25, color = "#000000") +
+  geom_point(size = 3, shape = 16, alpha = 0.6) +
+  scale_fill_manual(values=c("#b2182b", "#92c5de", "#2166ac", "#4393c3")) + 
+  geom_line(aes(color=SOURCE), stat="smooth", method = "loess", formula = y ~ x, span = 0.15, 
+            se = FALSE, linewidth = 2, alpha = 0.6)  +
+  scale_color_manual(values=c("#b2182b", "#92c5de", "#2166ac", "#4393c3")) + 
+  scale_y_continuous(breaks = seq(0, 2000, by = 200), limits = c(0,1950)) +
+  scale_x_continuous(breaks = seq(1970, 2020, by = 5), limits = c(1970,2022)) +
   ylab("no. publications") +
   xlab("publication year")
