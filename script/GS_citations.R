@@ -19,11 +19,11 @@ themeKV <- theme_few()+
         axis.line = element_blank(),
         axis.text.x = element_text(colour = "black", margin = margin(0.2, unit = "cm")),
         axis.text.y = element_text(colour = "black", margin = margin(c(1, 0.2), unit = "cm")),
-        axis.ticks.x = element_line(colour = "black", linewidth=.25), 
-        axis.ticks.y = element_line(colour = "black", linewidth=.25),
+        axis.ticks.x = element_line(colour = "black", size=.25), 
+        axis.ticks.y = element_line(colour = "black", size=.25),
         axis.ticks.length=unit(-0.15, "cm"), 
-        element_line(colour = "black", linewidth=.5),
-        panel.border = element_rect(colour = "black", fill=NA, linewidth=.5),
+        element_line(colour = "black", size=.5),
+        panel.border = element_rect(colour = "black", fill=NA, size=.5),
         legend.title=element_blank(),
         strip.text=element_text(hjust=0))
 
@@ -47,7 +47,7 @@ df <- df %>% rowwise() %>%
 cites <- gather(df, key="SOURCE", value="CITES", 2:5)
 
 ## calendar years that wish to use as demarcations in the citation time series 
-vlines <- c(1990,2016) 
+vlines <- c(1989.5,2016.5) 
 
 ## make plot
 ggplot(cites, aes(x = YEAR, y = CITES, group = SOURCE, color = SOURCE)) +
@@ -59,7 +59,7 @@ ggplot(cites, aes(x = YEAR, y = CITES, group = SOURCE, color = SOURCE)) +
   geom_point(size = 3, shape = 16, alpha = 0.6) +
   scale_fill_manual(values=c("#b2182b", "#92c5de", "#2166ac", "#4393c3")) + 
   geom_line(aes(color=SOURCE), stat="smooth", method = "loess", formula = y ~ x, span = 0.15, 
-            se = FALSE, linewidth = 2, alpha = 0.6)  +
+            se = FALSE, size = 2, alpha = 0.6)  +
   scale_color_manual(values=c("#b2182b", "#92c5de", "#2166ac", "#4393c3")) + 
   scale_y_continuous(breaks = seq(0, 2000, by = 200), limits = c(0,1950)) +
   scale_x_continuous(breaks = seq(1970, 2020, by = 5), limits = c(1970,2022)) +
