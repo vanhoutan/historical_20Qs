@@ -1,8 +1,10 @@
-<img src="header.png" width="400">
-
 # historical_20Qs
 
 Data and code for **"Global research priorities for historical ecology to inform conservation"**, published open access in *Endangered Species Research*.
+
+<p align="center">
+<img src="header.png" width="400">
+</p>
 
 [![DOI](https://img.shields.io/badge/DOI-10.3354%2Fesr01338-blue)](https://doi.org/10.3354/esr01338)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
